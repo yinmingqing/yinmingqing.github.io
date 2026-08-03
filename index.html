@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mingqing Yin</title>
+<meta name="description" content="Mingqing Yin. Portfolio. International organizations, design, communications and research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-soft: #F5F7FA;
+    --text: #1D1D1F;
+    --text-dim: #6E6E73;
+    --accent: #009EDB;      /* UN blue */
+    --accent-soft: #EAF6FD;
+    --card: #FFFFFF;
+    --line: #E4E7EC;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { display: block; }
+
+  /* ===== scroll snap ===== */
+  .snap-container {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+  }
+  .screen {
+    height: 100vh;
+    height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .screen.alt { background: var(--bg-soft); }
+
+  /* ===== language toggle ===== */
+  .lang-toggle {
+    position: fixed;
+    top: 24px;
+    right: 28px;
+    z-index: 100;
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 10px rgba(29,29,31,0.06);
+  }
+  .lang-toggle button {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font: 500 13px/1 'Inter', 'Noto Sans SC', sans-serif;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: color .25s, background .25s;
+  }
+  .lang-toggle button.active { color: #fff; background: var(--accent); }
+
+  [data-lang="en"] .zh { display: none; }
+  [data-lang="zh"] .en { display: none; }
+
+  /* ===== hero ===== */
+  .hero { align-items: center; text-align: center; padding: 0 24px; }
+  .hero-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 72vw; height: 72vw;
+    max-width: 900px; max-height: 900px;
+    transform: translate(-50%, -55%);
+    background: radial-gradient(circle, rgba(0,158,219,0.09) 0%, rgba(0,158,219,0.03) 45%, transparent 70%);
+    border-radius: 50%;
+    animation: breathe 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: .9; }
+    50% { transform: translate(-50%, -55%) scale(1.12); opacity: 1; }
+  }
+  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+  .hero-kicker {
+    font-size: 14px;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+  .hero-name {
+    font-size: clamp(52px, 9vw, 120px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: var(--text);
+  }
+  .hero-name .zh { font-weight: 700; letter-spacing: .06em; }
+  .hero-tagline {
+    margin-top: 30px;
+    font-size: clamp(17px, 2.4vw, 24px);
+    font-weight: 400;
+    color: var(--text);
+    max-width: 760px;
+  }
+  .hero-tagline .accent { color: var(--accent); font-weight: 600; }
+  .hero-sub {
+    margin-top: 14px;
+    font-size: clamp(14px, 1.6vw, 17px);
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+  .hero-orgs {
+    margin-top: 34px;
+    font-size: clamp(12px, 1.4vw, 15px);
+    letter-spacing: .22em;
+    color: var(--text-dim);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .hero-orgs b { color: var(--text); font-weight: 600; }
+  .sdg-strip {
+    margin-top: 18px;
+    display: flex;
+    width: min(300px, 60vw);
+    height: 3px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sdg-strip span { flex: 1; }
+  /* hero spread images, animated by scroll */
+  .spread {
+    position: absolute;
+    top: 50%; left: 50%;
+    z-index: 1;
+    width: clamp(180px, 22vw, 300px);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0,60,100,0.25);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .todo-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    color: #7A5A00;
+    background: #FFE9A8;
+    border-radius: 4px;
+    padding: 2px 7px;
+    vertical-align: middle;
+    margin-left: 10px;
+    transform: translateY(-2px);
+  }
+
+  /* ===== down arrow ===== */
+  .down-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    z-index: 5;
+  }
+  .down-hint svg { animation: bob 2s ease-in-out infinite; color: var(--accent); }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); opacity: .55; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* ===== section frame ===== */
+  .section-head { padding: 0 min(7vw, 96px); margin-bottom: 22px; }
+  .section-index {
+    font-size: 13px;
+    letter-spacing: .3em;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4.6vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--text);
+  }
+  .section-lede {
+    margin-top: 14px;
+    color: var(--text-dim);
+    font-size: clamp(14px, 1.7vw, 17px);
+    max-width: 680px;
+    font-weight: 300;
+  }
+  .guide-label {
+    padding: 0 min(7vw, 96px);
+    margin-top: 4px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .16em;
+  }
+  /* dashed guide arrow, standard for horizontal galleries */
+  .guide-arrow {
+    display: block;
+    width: 100%;
+    height: 24px;
+    margin: 10px 0 2px;
+    padding: 0 min(7vw, 96px);
+    overflow: visible;
+  }
+  .guide-arrow line {
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-dasharray: 7 9;
+    animation: dashflow 1.6s linear infinite;
+    opacity: .85;
+  }
+  .guide-arrow polyline {
+    stroke: var(--accent);
+    stroke-width: 2.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @keyframes dashflow { to { stroke-dashoffset: -32; } }
+  @media (prefers-reduced-motion: reduce) {
+    .guide-arrow line, .down-hint svg, .hero-glow { animation: none; }
+  }
+
+  /* ===== timeline ===== */
+  .tl-wrap { position: relative; }
+  .tl-track {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 6px min(7vw, 96px) 6px;
+    height: clamp(500px, 64vh, 640px);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    position: relative;
+    background-image: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 18px);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    background-attachment: local;
+  }
+  .tl-track::-webkit-scrollbar { display: none; }
+  .tl-card { align-self: flex-start; }
+  .tl-card:nth-child(even) { align-self: flex-end; }
+  .tl-dot {
+    position: absolute;
+    top: 50%;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft), 0 0 0 7px rgba(0,158,219,0.12);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .tl-axis-end {
+    flex: 0 0 46px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    color: var(--accent);
+  }
+  .tl-card {
+    flex: 0 0 clamp(280px, 26vw, 360px);
+    scroll-snap-align: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 28px 26px 24px;
+    position: relative;
+    box-shadow: 0 4px 18px rgba(29,29,31,0.05);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .tl-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0,158,219,0.55);
+    box-shadow: 0 20px 44px rgba(0,80,120,0.13);
+  }
+  .tl-years { font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--accent); margin-bottom: 14px; }
+  .tl-org { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 6px; color: var(--text); }
+  .tl-role { font-size: 14px; color: var(--text-dim); margin-bottom: 14px; font-weight: 400; }
+  .tl-achv {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 300;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tl-loc { margin-top: 14px; font-size: 12px; color: var(--text-dim); letter-spacing: .08em; text-transform: uppercase; }
+  .tl-card.milestone {
+    background: linear-gradient(165deg, var(--accent-soft) 0%, #FFFFFF 60%);
+    border-color: #CBE9F8;
+  }
+  .tl-nav { display: flex; gap: 12px; padding: 0 min(7vw, 96px); }
+  .tl-nav button, .gal-nav button {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    transition: border-color .25s, color .25s, box-shadow .25s;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(29,29,31,0.06);
+  }
+  .tl-nav button:hover, .gal-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ===== academic ===== */
+  .acad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 6px min(7vw, 96px) 46px;
+  }
+  .acad-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 4px 18px rgba(29,29,31,0.05);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    position: relative;
+  }
+  .acad-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0,158,219,0.55);
+    box-shadow: 0 18px 40px rgba(0,80,120,0.12);
+  }
+  .acad-type {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 4px 11px;
+    margin-bottom: 11px;
+  }
+  .acad-card.award .acad-type { color: #8A6D00; background: #FFF3C4; }
+  .acad-covers {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 11px;
+  }
+  .acad-covers img {
+    width: calc(50% - 5px);
+    height: 96px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    transition: transform .3s ease;
+  }
+  .acad-covers img:hover { transform: scale(1.03); }
+  .acad-links { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .acad-links .gal-btn { padding: 6px 13px; font-size: 12px; }
+  .acad-viz {
+    height: 96px;
+    border-radius: 10px;
+    margin-bottom: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .acad-viz.journal {
+    background: linear-gradient(135deg, #EAF6FD 0%, #D2ECFA 100%);
+    border: 1px solid #CBE9F8;
+  }
+  .acad-viz.journal .big {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .acad-viz.journal .small {
+    font-size: 10.5px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #4A7A96;
+    font-weight: 600;
+  }
+  .acad-viz.thesis {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.22) 0 2px, transparent 2px),
+      radial-gradient(circle at 45% 70%, rgba(255,255,255,0.18) 0 2px, transparent 2px),
+      radial-gradient(circle at 70% 25%, rgba(255,255,255,0.22) 0 2.5px, transparent 2.5px),
+      radial-gradient(circle at 85% 60%, rgba(255,255,255,0.16) 0 2px, transparent 2px),
+      radial-gradient(circle at 32% 55%, rgba(255,255,255,0.2) 0 1.5px, transparent 1.5px),
+      radial-gradient(circle at 60% 45%, rgba(255,255,255,0.22) 0 1.5px, transparent 1.5px),
+      linear-gradient(135deg, #00689D 0%, #009EDB 100%);
+  }
+  .acad-viz.thesis .big {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: .02em;
+    line-height: 1;
+  }
+  .acad-viz.thesis .small {
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+  }
+  .acad-cover-single {
+    width: 100%;
+    height: 96px;
+    object-fit: cover;
+    object-position: center 30%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    margin-bottom: 11px;
+    cursor: zoom-in;
+    transition: transform .3s ease;
+  }
+  .acad-cover-single:hover { transform: scale(1.02); }
+  .acad-title { font-size: 15.5px; font-weight: 700; line-height: 1.32; margin-bottom: 6px; }
+  .acad-meta { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
+  .acad-desc { font-size: 12.5px; line-height: 1.55; color: var(--text); font-weight: 300; }
+
+  /* ===== gallery (design and later sections) ===== */
+  .gal-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 14px min(7vw, 96px) 26px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .gal-track::-webkit-scrollbar { display: none; }
+  .gal-card {
+    flex: 0 0 clamp(300px, 30vw, 420px);
+    scroll-snap-align: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(29,29,31,0.05);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .gal-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0,158,219,0.55);
+    box-shadow: 0 20px 44px rgba(0,80,120,0.13);
+  }
+  .gal-cover {
+    width: 100%;
+    height: clamp(190px, 24vh, 250px);
+    object-fit: cover;
+    object-position: top center;
+    cursor: zoom-in;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .gal-body { padding: 20px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+  .gal-chip {
+    align-self: flex-start;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 4px 11px;
+    margin-bottom: 10px;
+  }
+  .gal-title { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 7px; }
+  .gal-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    font-weight: 300;
+    flex: 1;
+  }
+  .gal-actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .gal-btn {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--accent);
+    background: none;
+    border: 1px solid rgba(0,158,219,0.45);
+    border-radius: 999px;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .25s, color .25s;
+    font-family: inherit;
+  }
+  .gal-btn:hover { background: var(--accent); color: #fff; }
+  .gal-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .gal-btn.primary:hover { background: #0084b8; }
+  .gal-nav { display: flex; gap: 12px; padding: 0 min(7vw, 96px); }
+
+  /* ===== lightbox ===== */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(8, 11, 14, 0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 16px 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: min(1100px, 92vw);
+    max-height: 76vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .lb-caption { color: #cfd6dc; font-size: 14px; margin-top: 16px; text-align: center; max-width: 700px; }
+  .lb-count { color: #7d868d; font-size: 12px; letter-spacing: .15em; margin-top: 6px; }
+  .lb-close {
+    position: absolute;
+    top: 22px; right: 26px;
+    background: none; border: none;
+    color: #fff; font-size: 32px;
+    cursor: pointer; line-height: 1;
+    opacity: .8;
+  }
+  .lb-close:hover { opacity: 1; }
+  .lb-prev, .lb-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.09);
+    border: none;
+    color: #fff;
+    font-size: 26px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .25s;
+  }
+  .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.22); }
+  .lb-prev { left: 22px; }
+  .lb-next { right: 22px; }
+
+  /* ===== hand-drawn sketch arrows ===== */
+  .sketch-h {
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 0 min(7vw, 96px);
+    margin: 8px 0 2px;
+    overflow: visible;
+  }
+  .sketch-v { display: block; overflow: visible; }
+  .sketch-h path, .sketch-v path {
+    stroke: var(--accent);
+    stroke-width: 2.6;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sketch-draw path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .sketch-draw.visible path {
+    animation: drawon 1.1s ease-out forwards;
+  }
+  .sketch-draw.visible path:nth-child(2) { animation-delay: .75s; animation-duration: .45s; }
+  @keyframes drawon { to { stroke-dashoffset: 0; } }
+
+  /* ===== mini thumbs under gallery covers ===== */
+  .mini-thumbs {
+    display: flex;
+    gap: 6px;
+    padding: 8px 10px 0;
+  }
+  .mini-thumbs img {
+    width: calc(33.33% - 4px);
+    height: 52px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .mini-thumbs img:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+  /* ===== nego photo header ===== */
+  .nego-photo {
+    width: 100%;
+    height: 132px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    cursor: zoom-in;
+    transition: transform .3s ease;
+  }
+  .nego-photo:hover { transform: scale(1.02); }
+
+  /* ===== live embed overlay ===== */
+  .embed-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 220;
+    background: rgba(8, 11, 14, 0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 16px 20px;
+  }
+  .embed-overlay.open { display: flex; }
+  .embed-overlay iframe {
+    width: min(1200px, 94vw);
+    height: min(720px, 78vh);
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .embed-overlay .lb-caption { margin-top: 12px; }
+
+  /* ===== at a glance, final screen ===== */
+  .screen.tall {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-stop: normal;
+    padding-top: 9vh;
+    padding-bottom: 40px;
+    justify-content: flex-start;
+  }
+  .glance-wrap {
+    position: relative;
+    max-width: 980px;
+    margin: 14px auto 0;
+    width: 100%;
+    padding: 10px 18px 6px;
+  }
+  .glance-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    border-left: 2px dashed var(--accent);
+    opacity: .55;
+  }
+  .glance-item {
+    position: relative;
+    width: calc(50% - 40px);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 4px 18px rgba(29,29,31,0.05);
+    margin-bottom: 34px;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .glance-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,158,219,0.5);
+    box-shadow: 0 16px 36px rgba(0,80,120,0.11);
+  }
+  .glance-item.left { margin-right: auto; }
+  .glance-item.right { margin-left: auto; }
+  .glance-item::after {
+    content: "";
+    position: absolute;
+    top: 26px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .glance-item.left::after { right: -47px; }
+  .glance-item.right::after { left: -47px; }
+  .glance-year {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 12px;
+  }
+  .glance-org { font-size: 15.5px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+  .glance-thumbs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .glance-thumbs img {
+    width: calc(50% - 4px);
+    height: 74px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+  }
+  .glance-links { display: flex; flex-direction: column; gap: 7px; }
+  .glance-links a {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .glance-links a:hover { text-decoration: underline; }
+  .glance-links .plain { font-size: 12.5px; color: var(--text-dim); }
+
+  /* skills */
+  .skills-wrap {
+    max-width: 980px;
+    margin: 30px auto 0;
+    width: 100%;
+    padding: 0 18px;
+  }
+  .skills-title {
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .skill-rows { display: flex; flex-direction: column; gap: 10px; }
+  .skill-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .skill-cat {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    min-width: 110px;
+    text-align: right;
+  }
+  .skill-tag {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 14px;
+    transition: border-color .25s, color .25s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-tag.hot { background: var(--accent-soft); border-color: #CBE9F8; color: #007bb0; }
+
+  /* contact block */
+  .contact-block {
+    max-width: 640px;
+    margin: 36px auto 0;
+    width: 100%;
+    padding: 0 18px;
+    text-align: center;
+  }
+  .contact-block h3 { font-size: 21px; font-weight: 800; margin-bottom: 14px; }
+  .contact-emails { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .msg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+  .msg-form input, .msg-form textarea {
+    font-family: inherit;
+    font-size: 13.5px;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+    transition: border-color .25s;
+  }
+  .msg-form input:focus, .msg-form textarea:focus { border-color: var(--accent); }
+  .msg-form button {
+    align-self: center;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 999px;
+    padding: 11px 28px;
+    cursor: pointer;
+    transition: background .25s;
+  }
+  .msg-form button:hover { background: #0084b8; }
+  .msg-note { font-size: 11.5px; color: var(--text-dim); text-align: center; margin-top: 2px; }
+  .glance-foot {
+    margin-top: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ===== video ===== */
+  .gal-cover-wrap { position: relative; }
+  .play-badge {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 8px 26px rgba(0,40,70,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    pointer-events: none;
+    transition: transform .3s ease;
+  }
+  .gal-card:hover .play-badge { transform: translate(-50%, -50%) scale(1.1); }
+  .video-card { flex-basis: clamp(340px, 36vw, 500px); }
+
+  /* ===== digital comms stats ===== */
+  .stat-row {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .stat { flex: 1; }
+  .stat .num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .stat .lbl {
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .io-viz {
+    height: clamp(190px, 24vh, 250px);
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(150deg, var(--accent-soft) 0%, #FFFFFF 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .io-viz .glyph {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .io-viz .sub {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #4A7A96;
+    font-weight: 600;
+  }
+
+  /* ===== negotiation ===== */
+  .nego-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 14px min(7vw, 96px) 30px;
+  }
+  .nego-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 26px 26px 24px;
+    box-shadow: 0 4px 18px rgba(29,29,31,0.05);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .nego-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0,158,219,0.55);
+    box-shadow: 0 18px 40px rgba(0,80,120,0.12);
+  }
+  .nego-num {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--accent);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .nego-title { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+  .nego-desc { font-size: 13.5px; line-height: 1.65; color: var(--text-dim); font-weight: 300; }
+  .nego-desc b { color: var(--text); font-weight: 600; }
+
+  /* ===== contact ===== */
+  .contact { align-items: center; text-align: center; padding: 0 24px; }
+  .contact-title {
+    font-size: clamp(36px, 5.6vw, 68px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .contact-about {
+    margin-top: 22px;
+    max-width: 620px;
+    font-size: clamp(14px, 1.7vw, 17px);
+    line-height: 1.7;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+  .contact-actions {
+    margin-top: 34px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 13px 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(0,158,219,0.45);
+    color: var(--accent);
+    transition: background .25s, color .25s, transform .25s;
+  }
+  .contact-btn:hover { background: var(--accent-soft); transform: translateY(-2px); }
+  .contact-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .contact-btn.primary:hover { background: #0084b8; }
+  .contact-foot {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .contact-foot .copyright {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: .06em;
+  }
+
+  /* ===== reveal ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease-out, transform .6s ease-out;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .lang-toggle { top: 16px; right: 16px; }
+    .reveal { transform: translateY(10px); }
+    .tl-nav, .gal-nav { display: none; }
+    .tl-card { flex-basis: 82vw; }
+    .gal-card { flex-basis: 84vw; }
+    .tl-track { height: auto; background-position: 0 12px; padding-top: 30px; }
+    .tl-card, .tl-card:nth-child(even) { align-self: flex-start; }
+    .tl-dot { display: none; }
+    .tl-axis-end { align-self: flex-start; margin-top: 0; height: 24px; }
+    .section-head { margin-bottom: 12px; }
+    .acad-grid { grid-template-columns: 1fr; gap: 14px; overflow-y: auto; max-height: 62vh; }
+    .nego-grid { grid-template-columns: 1fr; gap: 14px; overflow-y: auto; max-height: 60vh; padding-bottom: 10px; }
+    .glance-wrap::before { left: 14px; }
+    .glance-item, .glance-item.left, .glance-item.right { width: calc(100% - 44px); margin-left: 44px; margin-right: 0; }
+    .glance-item.left::after, .glance-item.right::after { left: -37px; right: auto; }
+    .skill-cat { min-width: 0; text-align: left; width: 100%; }
+    .skill-row { justify-content: flex-start; }
+    .embed-overlay iframe { height: 60vh; }
+    .acad-card { padding: 20px 20px 18px; }
+    .hero-orgs { letter-spacing: .12em; }
+    .lb-prev, .lb-next { width: 42px; height: 42px; font-size: 20px; }
+    .lb-prev { left: 8px; } .lb-next { right: 8px; }
+  }
+</style>
+</head>
+<body>
+<div id="app" data-lang="en">
+
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中</button>
+  </div>
+
+  <div class="snap-container" id="snap">
+
+    <!-- ============ 1. HERO ============ -->
+    <section class="screen hero" id="hero">
+      <div class="hero-glow"></div>
+      <img class="spread" id="spread1" src="assets/hero_spread_01.jpg" alt="">
+      <img class="spread" id="spread2" src="assets/hero_spread_02.jpg" alt="">
+      <img class="spread" id="spread3" src="assets/hero_spread_03.jpg" alt="">
+      <div class="hero-content">
+        <div class="hero-kicker reveal">
+          <span class="en">Portfolio</span><span class="zh">个人作品集</span>
+        </div>
+        <h1 class="hero-name reveal">
+          <span class="en">Mingqing&nbsp;Yin</span><span class="zh">殷明晴</span>
+        </h1>
+        <p class="hero-tagline reveal">
+          <span class="en">Geographer&nbsp;&middot;&nbsp;<span class="accent">UN system communicator</span>&nbsp;&middot;&nbsp;Visual storyteller</span>
+          <span class="zh">地理学者&nbsp;&middot;&nbsp;<span class="accent">联合国系统传播者</span>&nbsp;&middot;&nbsp;视觉叙事者</span>
+        </p>
+        <p class="hero-sub reveal">
+          <span class="en">Bridging institutions, cultures and stories</span>
+          <span class="zh">连接机构、文化与故事</span>
+        </p>
+        <div class="hero-orgs reveal">
+          <b>UN ESCAP</b> &middot; <b>UNEP</b> &middot; <b>UNFCCC</b> &middot; <b>UPU</b>
+        </div>
+        <div class="sdg-strip reveal" aria-hidden="true">
+          <span style="background:#E5243B"></span><span style="background:#DDA63A"></span><span style="background:#4C9F38"></span><span style="background:#C5192D"></span><span style="background:#FF3A21"></span><span style="background:#26BDE2"></span><span style="background:#FCC30B"></span><span style="background:#A21942"></span><span style="background:#FD6925"></span><span style="background:#DD1367"></span><span style="background:#FD9D24"></span><span style="background:#BF8B2E"></span><span style="background:#3F7E44"></span><span style="background:#0A97D9"></span><span style="background:#56C02B"></span><span style="background:#00689D"></span><span style="background:#19486A"></span>
+        </div>
+      </div>
+      <div class="down-hint">
+        <span class="en">Scroll</span><span class="zh">下滑</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 2. TIMELINE ============ -->
+    <section class="screen alt" id="timeline">
+      <div class="section-head">
+        <div class="section-index reveal">01</div>
+        <h2 class="section-title reveal"><span class="en">Journey</span><span class="zh">履历时间轴</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">From broadcast studios in Nanjing to four United Nations bodies across Bangkok, Geneva, Bonn and Berne.</span>
+          <span class="zh">从南京的演播室出发,途经曼谷、日内瓦、波恩与伯尔尼的四个联合国机构。</span>
+        </p>
+      </div>
+      <div class="guide-label reveal">
+        <span class="en">Swipe from left to right &nbsp;&rarr;</span><span class="zh">从左向右滑动浏览 &nbsp;&rarr;</span>
+      </div>
+
+      <div class="tl-wrap">
+        <div class="tl-track" id="tlTrack">
+          <article class="tl-card reveal">
+            <div class="tl-years">2016 – 2020</div>
+            <h3 class="tl-org"><span class="en">Communication University of China</span><span class="zh">中国传媒大学(本科/双学位)</span></h3>
+            <p class="tl-role"><span class="en">B.A. Radio &amp; TV Directing, double degree</span><span class="zh">广播电视编导学士,辅修双学位</span></p>
+            <p class="tl-achv"><span class="en">Graduated in the top 7% as an outstanding graduate, trained in directing, editing and visual production.</span><span class="zh">以前7%的成绩获评优秀毕业生,系统训练导演、剪辑与视觉制作。</span></p>
+            <div class="tl-loc"><span class="en">Nanjing &middot; Beijing</span><span class="zh">南京 &middot; 北京</span></div>
+          </article>
+          <article class="tl-card reveal">
+            <div class="tl-years">2020 – 2022</div>
+            <h3 class="tl-org"><span class="en">Chulalongkorn University</span><span class="zh">朱拉隆功大学</span></h3>
+            <p class="tl-role"><span class="en">M.Sc. Urban Strategies</span><span class="zh">城市战略理学硕士</span></p>
+            <p class="tl-achv"><span class="en">Full ASEAN Scholarship. Researched urban spatial governance and cultural infrastructure investment.</span><span class="zh">获东盟全额奖学金,研究城市空间治理与文化基础设施投资效率。</span></p>
+            <div class="tl-loc"><span class="en">Bangkok</span><span class="zh">曼谷</span></div>
+          </article>
+          <article class="tl-card reveal">
+            <div class="tl-years">2021</div>
+            <h3 class="tl-org"><span class="en">Huawei Thailand</span><span class="zh">华为技术有限公司(泰国)</span></h3>
+            <p class="tl-role"><span class="en">Event Marketing Intern, APAC</span><span class="zh">活动市场实习生,亚太区</span></p>
+            <p class="tl-achv"><span class="en">Organized 30 partner events drawing 8,000+ participants, engaging C-level executives across Thai ICT.</span><span class="zh">策划组织30场伙伴企业活动,累计逾8000人参与,对接泰国头部ICT企业高层。</span></p>
+            <div class="tl-loc"><span class="en">Bangkok</span><span class="zh">曼谷</span></div>
+          </article>
+          <article class="tl-card milestone reveal">
+            <div class="tl-years">2023 – 2024</div>
+            <h3 class="tl-org">UN ESCAP</h3>
+            <p class="tl-role"><span class="en">Public Information Intern, then Consultant</span><span class="zh">公共信息实习生,后任公共信息顾问</span></p>
+            <p class="tl-achv"><span class="en">Co-authored the Economic and Social Survey of Asia and the Pacific 2023 and 2024, producing 15+ data infographics on public debt and SDG financing.</span><span class="zh">合著联合国官方出版物《亚太经济社会概览》2023与2024,产出15份以上公共债务与SDG融资信息图。</span></p>
+            <div class="tl-loc"><span class="en">Bangkok</span><span class="zh">曼谷</span></div>
+          </article>
+          <article class="tl-card reveal">
+            <div class="tl-years">2023 – 2026</div>
+            <h3 class="tl-org"><span class="en">University of Barcelona</span><span class="zh">巴塞罗那大学</span></h3>
+            <p class="tl-role"><span class="en">Ph.D. Candidate, Geography &amp; Territorial Planning</span><span class="zh">地理、国土规划与环境管理博士</span></p>
+            <p class="tl-achv"><span class="en">CSC Doctoral Scholarship. Thesis on spatial demographics and cultural entrepreneurship, defended.</span><span class="zh">获国家留学基金委博士奖学金,博士论文以空间人口学与文化创业为题,已答辩。</span></p>
+            <div class="tl-loc"><span class="en">Barcelona</span><span class="zh">巴塞罗那</span></div>
+          </article>
+          <article class="tl-card milestone reveal">
+            <div class="tl-years">2024 – 2025</div>
+            <h3 class="tl-org">UNEP</h3>
+            <p class="tl-role"><span class="en">Communications Intern, Economic &amp; Trade Policy Unit</span><span class="zh">经济与贸易政策组传播实习生</span></p>
+            <p class="tl-achv"><span class="en">Led design of 15+ policy infographics and ran the unit's LinkedIn and X channels, lifting engagement 15%.</span><span class="zh">全权负责15份以上政策信息图设计,运营LinkedIn与X账号,互动率提升15%。</span></p>
+            <div class="tl-loc"><span class="en">Geneva</span><span class="zh">日内瓦</span></div>
+          </article>
+          <article class="tl-card milestone reveal">
+            <div class="tl-years">2025 – 2026</div>
+            <h3 class="tl-org">UNFCCC</h3>
+            <p class="tl-role"><span class="en">Intern, Digital Unit, Communications &amp; Engagement</span><span class="zh">传播与参与司数字组实习生</span></p>
+            <p class="tl-achv"><span class="en">Produced multilingual content for global channels reaching 2M+ followers and assessed the COP30 youth engagement initiative, 12B+ Weibo impressions.</span><span class="zh">为覆盖200万+粉丝的全球渠道制作多语言内容,撰写COP30青年参与倡议影响力评估,微博曝光逾120亿次。</span></p>
+            <div class="tl-loc"><span class="en">Bonn</span><span class="zh">波恩</span></div>
+          </article>
+          <article class="tl-card milestone reveal">
+            <div class="tl-years">2026</div>
+            <h3 class="tl-org">UPU</h3>
+            <p class="tl-role"><span class="en">Intern, Consultative Committee, Administration &amp; Cabinet</span><span class="zh">行政与内阁局实习生,咨询委员会团队</span></p>
+            <p class="tl-achv"><span class="en">Coordinating Consultative Committee meetings end to end and maintaining the prospective member pipeline across the postal sector.</span><span class="zh">统筹咨询委员会内外会议全流程,维护潜在成员拓展渠道,推进公私伙伴关系议程。</span></p>
+            <div class="tl-loc"><span class="en">Berne</span><span class="zh">伯尔尼</span></div>
+          </article>
+          <div class="tl-axis-end" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="tl-nav">
+          <button aria-label="Previous" onclick="scrollTrack('tlTrack', -1)">&#8592;</button>
+          <button aria-label="Next" onclick="scrollTrack('tlTrack', 1)">&#8594;</button>
+        </div>
+      </div>
+
+      <div class="down-hint">
+        <span class="en">More</span><span class="zh">继续</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 3. ACADEMIC ============ -->
+    <section class="screen" id="academic">
+      <div class="section-head">
+        <div class="section-index reveal">02</div>
+        <h2 class="section-title reveal"><span class="en">Research</span><span class="zh">学术成果</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">Urban space, migration and development finance, from UN flagship publications to a defended doctoral thesis.</span>
+          <span class="zh">城市空间、移民与发展融资,从联合国旗舰出版物到已答辩的博士论文。</span>
+        </p>
+      </div>
+      <div class="acad-grid">
+        <article class="acad-card reveal">
+          <span class="acad-type"><span class="en">UN Flagship Publication</span><span class="zh">联合国旗舰出版物</span></span>
+          <div class="acad-covers">
+            <img src="assets/acad_cover_2023.jpg" alt="Survey 2023 cover" onclick="openLb('survey', 0)">
+            <img src="assets/acad_cover_2024.jpg" alt="Survey 2024 cover" onclick="openLb('survey', 1)">
+          </div>
+          <h3 class="acad-title">Economic and Social Survey of Asia and the Pacific 2023 &amp; 2024</h3>
+          <p class="acad-meta">UN ESCAP &middot; 2023, 2024</p>
+          <p class="acad-desc">
+            <span class="en">Co-author of two editions of the UN flagship publication on public debt and SDG financing, credited for research inputs and for the 2024 graphic design and layout.</span>
+            <span class="zh">联合国旗舰出版物两个年度版本的合著者,承担政策研究与证据综合,并署名2024版的平面设计与排版。</span>
+          </p>
+          <div class="acad-links">
+            <a class="gal-btn" href="https://www.unescap.org/kp/2023/economic-and-social-survey-asia-and-pacific-2023-rethinking-public-debt-sustainable" target="_blank" rel="noopener">Survey 2023 &#8599;</a>
+            <a class="gal-btn" href="https://www.unescap.org/kp/2024/survey2024" target="_blank" rel="noopener">Survey 2024 &#8599;</a>
+          </div>
+        </article>
+        <article class="acad-card award reveal">
+          <span class="acad-type"><span class="en">Award &middot; Conference</span><span class="zh">获奖 &middot; 会议</span></span>
+          <div class="acad-covers">
+            <img src="assets/acad_oxford_poster.jpg" alt="City+ 2025 Oxford conference" style="object-position: center 22%;" onclick="openLb('oxford', 0)">
+            <img src="assets/acad_oxford.jpg" alt="Outstanding Presentation Award certificate" onclick="openLb('oxford', 1)">
+          </div>
+          <h3 class="acad-title"><span class="en">Spatial demographics and cultural entrepreneurship in Barcelona's ethnic enclaves</span><span class="zh">巴塞罗那族裔聚居区的空间人口学与文化创业</span></h3>
+          <p class="acad-meta">City+ International Conference 2025 &middot; University of Oxford</p>
+          <p class="acad-desc">
+            <span class="en">Outstanding Presentation Award, supported by Elsevier.</span>
+            <span class="zh">获 Outstanding Presentation Award(Elsevier 支持)。</span>
+          </p>
+        </article>
+        <article class="acad-card reveal">
+          <span class="acad-type"><span class="en">Journal Article</span><span class="zh">期刊论文</span></span>
+          <div class="acad-viz journal" aria-hidden="true">
+            <div class="big">ASR</div>
+            <div class="small">Chiang Mai University &middot; ISSN 2465-4329</div>
+          </div>
+          <h3 class="acad-title"><span class="en">Development of smart city policies in first-tier cities in China</span><span class="zh">中国一线城市智慧城市政策发展研究</span></h3>
+          <p class="acad-meta">ASR: Chiang Mai University Journal of Social Sciences and Humanities &middot; 2022</p>
+          <p class="acad-desc">
+            <span class="en">Peer-reviewed study of smart city policy trajectories across China's first-tier cities.</span>
+            <span class="zh">同行评议论文,研究中国一线城市智慧城市政策路径。</span>
+          </p>
+          <div class="acad-links">
+            <a class="gal-btn" href="https://www.academia.edu/107772344/Development_of_Smart_City_Policies_in_First_tier_Cities_in_China" target="_blank" rel="noopener"><span class="en">Read paper &#8599;</span><span class="zh">阅读论文 &#8599;</span></a>
+          </div>
+        </article>
+        <article class="acad-card reveal">
+          <span class="acad-type"><span class="en">Doctoral Thesis</span><span class="zh">博士论文</span></span>
+          <div class="acad-covers">
+            <img src="assets/acad_gis_02.jpg" alt="Barcelona Chinese population distribution map" style="object-position: 62% 45%;" onclick="openLb('gis', 1)">
+            <img src="assets/acad_gis_04.jpg" alt="Spatial correlation of Chinese population agglomeration" style="object-position: 72% 38%;" onclick="openLb('gis', 3)">
+          </div>
+          <h3 class="acad-title"><span class="en">Spatial demographics and cultural entrepreneurship in Barcelona's ethnic enclaves</span><span class="zh">空间人口学与文化创业:巴塞罗那族裔聚居区研究</span></h3>
+          <p class="acad-meta"><span class="en">University of Barcelona &middot; defended</span><span class="zh">巴塞罗那大学 &middot; 已答辩</span></p>
+          <p class="acad-desc">
+            <span class="en">GIS spatial analysis, demographic modeling and fieldwork on migration-driven community change, funded by a CSC Doctoral Scholarship.</span>
+            <span class="zh">运用GIS空间分析、人口建模与田野调查研究移民驱动的社区变迁,获国家留学基金委资助。</span>
+          </p>
+        </article>
+      </div>
+      <div class="down-hint">
+        <span class="en">More</span><span class="zh">继续</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 4. DESIGN ============ -->
+    <section class="screen alt" id="design">
+      <div class="section-head">
+        <div class="section-index reveal">03</div>
+        <h2 class="section-title reveal"><span class="en">Design</span><span class="zh">设计作品</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">Making complex policy legible, from UN flagship reports to live data dashboards.</span>
+          <span class="zh">让复杂的政策变得可读,从联合国旗舰报告到实时数据看板。</span>
+        </p>
+      </div>
+      <svg class="sketch-h sketch-draw reveal" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M6 19 C 130 11, 270 25, 430 16 C 560 9, 700 22, 840 15 C 880 13, 912 14, 938 13"></path>
+        <path pathLength="1" d="M914 3 C 926 7, 936 10, 950 13 C 936 17, 924 22, 913 27"></path>
+      </svg>
+
+      <div class="gal-track" id="designTrack">
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_escap23_01.jpg" alt="ESCAP Survey 2023 infographic" onclick="openLb('escap23', 0)">
+          <div class="mini-thumbs" aria-hidden="true">
+            <img src="assets/design_escap23_02.jpg" alt="" onclick="openLb('escap23', 1)">
+            <img src="assets/design_escap23_03.jpg" alt="" onclick="openLb('escap23', 2)">
+            <img src="assets/design_escap23_04.jpg" alt="" onclick="openLb('escap23', 3)">
+          </div>
+          <div class="gal-body">
+            <span class="gal-chip"><span class="en">UN Flagship Publication</span><span class="zh">联合国旗舰出版物</span></span>
+            <h3 class="gal-title"><span class="en">Survey 2023 Infographic Series</span><span class="zh">《亚太经济社会概览2023》信息图系列</span></h3>
+            <p class="gal-desc">
+              <span class="en">Five spread infographics on rethinking public debt for the SDGs. Contributed data infographics and research inputs across the 2023 edition, credited in the acknowledgements.</span>
+              <span class="zh">五张公共债务与SDG主题整页信息图,为2023版贡献数据信息图与研究输入,列名致谢页。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('escap23', 0)"><span class="en">View series</span><span class="zh">查看系列</span></button>
+              <a class="gal-btn" href="https://www.unescap.org/kp/2023/economic-and-social-survey-asia-and-pacific-2023-rethinking-public-debt-sustainable" target="_blank" rel="noopener"><span class="en">Official page &#8599;</span><span class="zh">官方页面 &#8599;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_escap24_01.jpg" alt="ESCAP Survey 2024 infographic" onclick="openLb('escap24', 0)">
+          <div class="mini-thumbs" aria-hidden="true">
+            <img src="assets/design_escap24_02.jpg" alt="" onclick="openLb('escap24', 1)">
+            <img src="assets/design_escap24_03.jpg" alt="" onclick="openLb('escap24', 2)">
+            <img src="assets/design_escap24_05.jpg" alt="" onclick="openLb('escap24', 4)">
+          </div>
+          <div class="gal-body">
+            <span class="gal-chip"><span class="en">UN Flagship Publication</span><span class="zh">联合国旗舰出版物</span></span>
+            <h3 class="gal-title"><span class="en">Survey 2024 Infographic Series</span><span class="zh">《亚太经济社会概览2024》信息图系列</span></h3>
+            <p class="gal-desc">
+              <span class="en">Five spread infographics for UN ESCAP's flagship report. The 2024 edition credits the graphic design and layout to Mingqing Yin and Clung Wicha.</span>
+              <span class="zh">为联合国亚太经社会旗舰报告设计的五张整页信息图,2024版致谢页署名平面设计与排版。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('escap24', 0)"><span class="en">View series</span><span class="zh">查看系列</span></button>
+              <a class="gal-btn" href="https://www.unescap.org/kp/2024/survey2024" target="_blank" rel="noopener"><span class="en">Official page &#8599;</span><span class="zh">官方页面 &#8599;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_ccpage_01.jpg" alt="UPU CC prospectus design" onclick="openLb('ccpage', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UPU</span>
+            <h3 class="gal-title"><span class="en">Consultative Committee Prospectus</span><span class="zh">咨询委员会介绍页设计</span></h3>
+            <p class="gal-desc">
+              <span class="en">A four-part visual introduction to the UPU Consultative Committee, covering its value pillars, membership structure and evolution since 1999.</span>
+              <span class="zh">为万国邮联咨询委员会设计的四段式视觉介绍,涵盖价值支柱、会员结构与1999年以来的演进。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('ccpage', 0)"><span class="en">View set</span><span class="zh">查看整套</span></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_dashboard_01.jpg" alt="ESCAP Public Debt Dashboard" onclick="openLb('dashboard', 0)">
+          <div class="gal-body">
+            <span class="gal-chip"><span class="en">Interactive Data</span><span class="zh">交互数据</span></span>
+            <h3 class="gal-title"><span class="en">Public Debt Dashboard</span><span class="zh">公共债务数据看板</span></h3>
+            <p class="gal-desc">
+              <span class="en">A live Power BI dashboard visualizing 100+ debt indicators across Asia-Pacific economies, published with the Survey 2023.</span>
+              <span class="zh">随2023年报告发布的Power BI实时看板,可视化亚太经济体的100余项债务指标。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openEmbed()"><span class="en">Open live dashboard</span><span class="zh">打开实时看板</span></button>
+              <a class="gal-btn" href="https://app.powerbi.com/view?r=eyJrIjoiMjhkNGQ2NmUtMGE4Ny00N2U1LTkyODItY2ExOWYyN2Q5OWRkIiwidCI6IjBmOWUzNWRiLTU0NGYtNGY2MC1iZGNjLTVlYTQxNmU2ZGM3MCIsImMiOjh9" target="_blank" rel="noopener"><span class="en">New tab &#8599;</span><span class="zh">新标签页 &#8599;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_unep_01.jpg" alt="UNEP infographic" onclick="openLb('unep', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UNEP</span>
+            <h3 class="gal-title"><span class="en">Policy Infographics, ETPU</span><span class="zh">经贸政策信息图</span></h3>
+            <p class="gal-desc">
+              <span class="en">Infographics translating environmental and trade policy for policymaker and donor audiences, published on UNEP FET channels.</span>
+              <span class="zh">将环境与贸易政策转译为面向决策者与捐助方的信息图,发布于UNEP FET官方渠道。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('unep', 0)"><span class="en">View set</span><span class="zh">查看整套</span></button>
+              <a class="gal-btn" href="https://www.linkedin.com/posts/fet-unep_page-argentina-activity-7272935488263442432-lL-H" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/design_webinar_01.jpg" alt="UPU CC webinar banner" onclick="openLb('webinar', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UPU</span>
+            <h3 class="gal-title"><span class="en">CC Webinar Series Visual</span><span class="zh">CC网络研讨会系列视觉</span></h3>
+            <p class="gal-desc">
+              <span class="en">Key visual for the Consultative Committee webinar series on EU customs reform and market transition.</span>
+              <span class="zh">咨询委员会网络研讨会系列主视觉,主题为欧盟海关改革与市场转型。</span>
+            </p>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('webinar', 0)"><span class="en">View</span><span class="zh">查看</span></button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="gal-nav">
+        <button aria-label="Previous" onclick="scrollTrack('designTrack', -1)">&#8592;</button>
+        <button aria-label="Next" onclick="scrollTrack('designTrack', 1)">&#8594;</button>
+      </div>
+
+      <div class="down-hint">
+        <span class="en">More</span><span class="zh">继续</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 5. MEDIA & COMMUNICATIONS ============ -->
+    <section class="screen" id="media">
+      <div class="section-head">
+        <div class="section-index reveal">04</div>
+        <h2 class="section-title reveal"><span class="en">Media &amp; Communications</span><span class="zh">传播作品</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">Films, channels and columns for United Nations audiences in the millions.</span>
+          <span class="zh">面向百万级受众的视频、账号与专栏。</span>
+        </p>
+      </div>
+      <svg class="sketch-h sketch-draw reveal" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M6 15 C 150 22, 300 8, 460 17 C 600 24, 740 10, 850 16 C 890 18, 916 15, 938 14"></path>
+        <path pathLength="1" d="M915 4 C 926 8, 936 11, 950 14 C 936 18, 923 23, 913 28"></path>
+      </svg>
+
+      <div class="gal-track" id="mediaTrack">
+
+        <article class="gal-card reveal">
+          <a class="gal-cover-wrap" href="https://www.youtube.com/watch?v=JCwP1I4BTjc" target="_blank" rel="noopener">
+            <img class="gal-cover" src="assets/acad_cover_2023.jpg" alt="Survey 2023 launch video">
+            <span class="play-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </a>
+          <div class="gal-body">
+            <span class="gal-chip">UN ESCAP &middot; YouTube</span>
+            <h3 class="gal-title"><span class="en">Survey 2023 Launch Video</span><span class="zh">《亚太经济社会概览2023》发布视频</span></h3>
+            <p class="gal-desc">
+              <span class="en">Launch film for the flagship report on rethinking public debt, on the official UN ESCAP channel.</span>
+              <span class="zh">旗舰报告发布视频,发布于联合国亚太经社会官方频道。</span>
+            </p>
+            <div class="gal-actions">
+              <a class="gal-btn primary" href="https://www.youtube.com/watch?v=JCwP1I4BTjc" target="_blank" rel="noopener"><span class="en">Watch &#8599;</span><span class="zh">观看 &#8599;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <a class="gal-cover-wrap" href="https://www.youtube.com/watch?v=0YRIWOnacrA" target="_blank" rel="noopener">
+            <img class="gal-cover" src="assets/acad_cover_2024.jpg" alt="Survey 2024 launch video">
+            <span class="play-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </a>
+          <div class="gal-body">
+            <span class="gal-chip">UN ESCAP &middot; YouTube</span>
+            <h3 class="gal-title"><span class="en">Survey 2024 Launch Video</span><span class="zh">《亚太经济社会概览2024》发布视频</span></h3>
+            <p class="gal-desc">
+              <span class="en">Launch film for the 2024 edition on boosting affordable, longer-term financing.</span>
+              <span class="zh">2024年版发布视频,主题为提升政府可负担的长期融资。</span>
+            </p>
+            <div class="gal-actions">
+              <a class="gal-btn primary" href="https://www.youtube.com/watch?v=0YRIWOnacrA" target="_blank" rel="noopener"><span class="en">Watch &#8599;</span><span class="zh">观看 &#8599;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/dc_unfccc_01.jpg" alt="UNFCCC Instagram content" style="object-position: center 30%;" onclick="openLb('unfccc', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UNFCCC</span>
+            <h3 class="gal-title"><span class="en">@unclimatechange Content</span><span class="zh">UN Climate Change 官方账号内容</span></h3>
+            <p class="gal-desc">
+              <span class="en">Multilingual content for UNFCCC's global channels across Instagram, LinkedIn, Facebook, X and TikTok.</span>
+              <span class="zh">为UNFCCC全球数字渠道制作多语言内容。</span>
+            </p>
+            <div class="stat-row">
+              <div class="stat"><div class="num" data-count="2" data-suffix="M+">0</div><div class="lbl"><span class="en">followers reached</span><span class="zh">渠道粉丝覆盖</span></div></div>
+              <div class="stat"><div class="num" data-count="12" data-suffix="B+">0</div><div class="lbl"><span class="en">Weibo impressions, COP30</span><span class="zh">COP30倡议微博曝光</span></div></div>
+            </div>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('unfccc', 0)"><span class="en">View posts</span><span class="zh">查看内容</span></button>
+              <a class="gal-btn" href="https://www.instagram.com/unclimatechange/" target="_blank" rel="noopener">Instagram &#8599;</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/dc_unep_li_01.jpg" alt="UNEP FET LinkedIn" style="object-position: center 32%;" onclick="openLb('unepli', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UNEP</span>
+            <h3 class="gal-title"><span class="en">FET Channel Operations</span><span class="zh">FET 官方账号运营</span></h3>
+            <p class="gal-desc">
+              <span class="en">Ran the unit's LinkedIn and X channels, three to four strategic posts a week.</span>
+              <span class="zh">运营该部门LinkedIn与X账号,每周3至4条策略性内容。</span>
+            </p>
+            <div class="stat-row">
+              <div class="stat"><div class="num" data-count="15" data-suffix="%">0</div><div class="lbl"><span class="en">engagement lift</span><span class="zh">互动率提升</span></div></div>
+              <div class="stat"><div class="num" data-count="1000" data-suffix="+">0</div><div class="lbl"><span class="en">impressions per post</span><span class="zh">平均每帖浏览</span></div></div>
+            </div>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('unepli', 0)"><span class="en">View channel</span><span class="zh">查看账号</span></button>
+              <a class="gal-btn" href="https://www.linkedin.com/company/fet-unep/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <img class="gal-cover" src="assets/dc_upu_li_01.jpg" alt="UPU LinkedIn content" style="object-position: center 82%;" onclick="openLb('upuli', 0)">
+          <div class="gal-body">
+            <span class="gal-chip">UPU</span>
+            <h3 class="gal-title"><span class="en">Consultative Committee Communications</span><span class="zh">咨询委员会对外传播</span></h3>
+            <p class="gal-desc">
+              <span class="en">Member welcome visuals and committee updates on UPU's official LinkedIn channel.</span>
+              <span class="zh">新成员欢迎视觉与委员会动态,发布于万国邮联官方LinkedIn。</span>
+            </p>
+            <div class="stat-row">
+              <div class="stat"><div class="num" data-count="46" data-suffix="">0</div><div class="lbl"><span class="en">member organizations</span><span class="zh">委员会成员机构</span></div></div>
+              <div class="stat"><div class="num" data-count="192" data-suffix="">0</div><div class="lbl"><span class="en">UPU member countries</span><span class="zh">UPU成员国</span></div></div>
+            </div>
+            <div class="gal-actions">
+              <button class="gal-btn primary" onclick="openLb('upuli', 0)"><span class="en">View posts</span><span class="zh">查看内容</span></button>
+              <a class="gal-btn" href="https://www.linkedin.com/company/universal-postal-union/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="gal-card reveal">
+          <div class="io-viz">
+            <div class="glyph">12</div>
+            <div class="sub"><span class="en">Original Articles</span><span class="zh">篇原创文章</span></div>
+          </div>
+          <div class="gal-body">
+            <span class="gal-chip"><span class="en">Independent Writing</span><span class="zh">独立写作</span></span>
+            <h3 class="gal-title"><span class="en">Chinese Column on International Careers</span><span class="zh">国际组织职场中文专栏</span></h3>
+            <p class="gal-desc">
+              <span class="en">An independent Chinese-language column demystifying how international organizations actually work.</span>
+              <span class="zh">独立运营的中文专栏,拆解国际组织的真实工作方式与职业路径。</span>
+            </p>
+            <div class="stat-row">
+              <div class="stat"><div class="num" data-count="9500" data-suffix="+">0</div><div class="lbl"><span class="en">top article reads</span><span class="zh">单篇最高阅读</span></div></div>
+              <div class="stat"><div class="num" data-count="3000" data-suffix="+">0</div><div class="lbl"><span class="en">subscribers</span><span class="zh">订阅读者</span></div></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="gal-nav">
+        <button aria-label="Previous" onclick="scrollTrack('mediaTrack', -1)">&#8592;</button>
+        <button aria-label="Next" onclick="scrollTrack('mediaTrack', 1)">&#8594;</button>
+      </div>
+      <div class="down-hint">
+        <span class="en">More</span><span class="zh">继续</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 7. NEGOTIATION & COORDINATION ============ -->
+    <section class="screen" id="coordination">
+      <div class="section-head">
+        <div class="section-index reveal">05</div>
+        <h2 class="section-title reveal"><span class="en">Negotiation &amp; Coordination</span><span class="zh">协商与协调</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">Where public institutions meet private partners, someone has to hold the room together.</span>
+          <span class="zh">在公共机构与私营伙伴的交汇处,总要有人把各方协调到一起。</span>
+        </p>
+      </div>
+      <div class="nego-grid">
+        <article class="nego-card reveal">
+          <img class="nego-photo" src="assets/nego_meeting.jpg" alt="UPU meeting panel" onclick="openLb('nego', 0)">
+          <div class="nego-num">01</div>
+          <h3 class="nego-title"><span class="en">Committee Meetings, End to End</span><span class="zh">委员会会议全流程统筹</span></h3>
+          <p class="nego-desc">
+            <span class="en">Coordinated the Consultative Committee's <b>internal and external meetings</b> across member organizations and designated postal operators, from invitations and logistics through follow-up.</span>
+            <span class="zh">统筹咨询委员会<b>内外会议全流程</b>,覆盖跨成员组织与指定邮政运营商的会务、邀请与参与协调。</span>
+          </p>
+        </article>
+        <article class="nego-card reveal">
+          <img class="nego-photo" src="assets/nego_ccday.jpg" alt="CC Member Day group photo" style="object-position: center 40%;" onclick="openLb('nego', 1)">
+          <div class="nego-num">02</div>
+          <h3 class="nego-title"><span class="en">Matchmaking Facilitation</span><span class="zh">成员与运营商撮合对接</span></h3>
+          <p class="nego-desc">
+            <span class="en">Supported <b>matchmaking between Committee members and postal operators</b>, advancing the UPU's public-private partnership agenda one introduction at a time.</span>
+            <span class="zh">协助推进<b>委员会成员与邮政运营商之间的撮合对接</b>,以一次次引荐推动万国邮联的公私伙伴关系议程。</span>
+          </p>
+        </article>
+        <article class="nego-card reveal">
+          <img class="nego-photo" src="assets/nego_members.jpg" alt="CC members list" style="object-position: center 30%;" onclick="openLb('nego', 2)">
+          <div class="nego-num">03</div>
+          <h3 class="nego-title"><span class="en">Member Pipeline &amp; Engagement</span><span class="zh">潜在成员渠道维护</span></h3>
+          <p class="nego-desc">
+            <span class="en">Maintained the <b>prospective member contact pipeline</b> and supported stakeholder engagement functions across the international postal sector.</span>
+            <span class="zh">维护<b>潜在成员联系渠道</b>,支持面向国际邮政行业的利益相关方拓展工作。</span>
+          </p>
+        </article>
+      </div>
+      <div class="down-hint">
+        <span class="en">More</span><span class="zh">继续</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ 8. AT A GLANCE ============ -->
+    <section class="screen alt tall" id="glance">
+      <div class="section-head">
+        <div class="section-index reveal">06</div>
+        <h2 class="section-title reveal"><span class="en">Everything, One Page</span><span class="zh">全景速览</span></h2>
+        <p class="section-lede reveal">
+          <span class="en">Every verifiable link from this portfolio, year by year, plus the toolbox behind it.</span>
+          <span class="zh">本作品集里所有可验证的链接,按年梳理,外加背后的技能工具箱。</span>
+        </p>
+      </div>
+      <div class="glance-wrap">
+
+        <div class="glance-item left reveal">
+          <span class="glance-year">2023</span>
+          <div class="glance-org"><span class="en">UN ESCAP &middot; Bangkok</span><span class="zh">联合国亚太经社会 &middot; 曼谷</span></div>
+          <div class="glance-thumbs">
+            <img src="assets/acad_cover_2023.jpg" alt="Survey 2023">
+            <img src="assets/design_dashboard_01.jpg" alt="Public Debt Dashboard">
+          </div>
+          <div class="glance-links">
+            <a href="https://www.unescap.org/kp/2023/economic-and-social-survey-asia-and-pacific-2023-rethinking-public-debt-sustainable" target="_blank" rel="noopener">Survey 2023, UN flagship report &#8599;</a>
+            <a href="https://www.youtube.com/watch?v=JCwP1I4BTjc" target="_blank" rel="noopener"><span class="en">Launch video, YouTube &#8599;</span><span class="zh">发布视频 YouTube &#8599;</span></a>
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiMjhkNGQ2NmUtMGE4Ny00N2U1LTkyODItY2ExOWYyN2Q5OWRkIiwidCI6IjBmOWUzNWRiLTU0NGYtNGY2MC1iZGNjLTVlYTQxNmU2ZGM3MCIsImMiOjh9" target="_blank" rel="noopener"><span class="en">Public Debt Dashboard, live Power BI &#8599;</span><span class="zh">公共债务实时看板 Power BI &#8599;</span></a>
+          </div>
+        </div>
+
+        <div class="glance-item right reveal">
+          <span class="glance-year">2024</span>
+          <div class="glance-org"><span class="en">UN ESCAP &middot; UNEP, Geneva</span><span class="zh">亚太经社会 &middot; 环境署,日内瓦</span></div>
+          <div class="glance-thumbs">
+            <img src="assets/acad_cover_2024.jpg" alt="Survey 2024">
+            <img src="assets/design_unep_02.jpg" alt="UNEP infographic" style="object-position: center 30%;">
+          </div>
+          <div class="glance-links">
+            <a href="https://www.unescap.org/kp/2024/survey2024" target="_blank" rel="noopener"><span class="en">Survey 2024, design credit in acknowledgements &#8599;</span><span class="zh">Survey 2024,致谢页设计署名 &#8599;</span></a>
+            <a href="https://www.youtube.com/watch?v=0YRIWOnacrA" target="_blank" rel="noopener"><span class="en">Launch video, YouTube &#8599;</span><span class="zh">发布视频 YouTube &#8599;</span></a>
+            <a href="https://www.linkedin.com/company/fet-unep/" target="_blank" rel="noopener">UNEP FET LinkedIn &#8599;</a>
+          </div>
+        </div>
+
+        <div class="glance-item left reveal">
+          <span class="glance-year">2025</span>
+          <div class="glance-org"><span class="en">UNFCCC, Bonn &middot; University of Oxford</span><span class="zh">气候变化框架公约,波恩 &middot; 牛津大学</span></div>
+          <div class="glance-thumbs">
+            <img src="assets/dc_unfccc_01.jpg" alt="UNFCCC Instagram" style="object-position: center 30%;">
+            <img src="assets/acad_oxford_poster.jpg" alt="City+ 2025 Oxford" style="object-position: center 22%;">
+          </div>
+          <div class="glance-links">
+            <a href="https://www.instagram.com/unclimatechange/" target="_blank" rel="noopener">@unclimatechange, Instagram &#8599;</a>
+            <span class="plain"><span class="en">Outstanding Presentation Award, City+ 2025, Oxford</span><span class="zh">City+ 2025 牛津,最佳报告奖</span></span>
+            <a href="https://www.academia.edu/107772344/Development_of_Smart_City_Policies_in_First_tier_Cities_in_China" target="_blank" rel="noopener"><span class="en">Journal paper, smart city policies &#8599;</span><span class="zh">期刊论文,智慧城市政策 &#8599;</span></a>
+          </div>
+        </div>
+
+        <div class="glance-item right reveal">
+          <span class="glance-year">2026</span>
+          <div class="glance-org"><span class="en">UPU &middot; Berne</span><span class="zh">万国邮政联盟 &middot; 伯尔尼</span></div>
+          <div class="glance-thumbs">
+            <img src="assets/design_webinar_01.jpg" alt="CC webinar visual">
+            <img src="assets/nego_ccday.jpg" alt="CC Member Day" style="object-position: center 40%;">
+          </div>
+          <div class="glance-links">
+            <a href="https://www.upu.int/en/universal-postal-union/about-upu/bodies/consultative-committee" target="_blank" rel="noopener"><span class="en">Consultative Committee, official page &#8599;</span><span class="zh">咨询委员会官方页面 &#8599;</span></a>
+            <a href="https://www.upu.int/en/Universal-Postal-Union/About-UPU/Bodies/Consultative-Committee/CC-List-of-members" target="_blank" rel="noopener"><span class="en">CC members list &#8599;</span><span class="zh">CC成员列表 &#8599;</span></a>
+            <a href="https://www.linkedin.com/company/universal-postal-union/" target="_blank" rel="noopener">UPU LinkedIn &#8599;</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="skills-wrap reveal">
+        <h3 class="skills-title"><span class="en">Toolbox</span><span class="zh">技能工具箱</span></h3>
+        <div class="skill-rows">
+          <div class="skill-row">
+            <span class="skill-cat"><span class="en">Video</span><span class="zh">视频</span></span>
+            <span class="skill-tag hot">Premiere Pro &middot; Adobe Certified</span>
+            <span class="skill-tag"><span class="en">Editing &amp; scripting</span><span class="zh">剪辑与脚本</span></span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-cat"><span class="en">Design</span><span class="zh">设计</span></span>
+            <span class="skill-tag">Illustrator</span>
+            <span class="skill-tag">Canva</span>
+            <span class="skill-tag">Infogram</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-cat"><span class="en">Data</span><span class="zh">数据</span></span>
+            <span class="skill-tag hot">GIS</span>
+            <span class="skill-tag">SPSS</span>
+            <span class="skill-tag">Power BI</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-cat"><span class="en">Web</span><span class="zh">网站</span></span>
+            <span class="skill-tag hot">Kentico CMS</span>
+            <span class="skill-tag">GitHub Pages</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-cat"><span class="en">Workplace</span><span class="zh">协作</span></span>
+            <span class="skill-tag">Microsoft Office</span>
+            <span class="skill-tag">Outlook &middot; Teams &middot; SharePoint</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-block reveal">
+        <h3><span class="en">Contact</span><span class="zh">联系</span></h3>
+        <div class="contact-emails">
+          <a class="contact-btn primary" href="mailto:yin.mingqing1212@gmail.com">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            yin.mingqing1212@gmail.com
+          </a>
+        </div>
+        <form class="msg-form" onsubmit="return sendMsg(event)">
+          <input type="text" id="msgName" placeholder="Your name / 你的称呼" required>
+          <textarea id="msgBody" rows="4" placeholder="Leave a message... / 给我留言..." required></textarea>
+          <button type="submit"><span class="en">Send message</span><span class="zh">发送留言</span></button>
+          <p class="msg-note"><span class="en">Opens your email app with the message prefilled.</span><span class="zh">将打开你的邮件应用并预填内容。</span></p>
+        </form>
+      </div>
+
+      <div class="glance-foot">
+        <div class="sdg-strip" aria-hidden="true">
+          <span style="background:#E5243B"></span><span style="background:#DDA63A"></span><span style="background:#4C9F38"></span><span style="background:#C5192D"></span><span style="background:#FF3A21"></span><span style="background:#26BDE2"></span><span style="background:#FCC30B"></span><span style="background:#A21942"></span><span style="background:#FD6925"></span><span style="background:#DD1367"></span><span style="background:#FD9D24"></span><span style="background:#BF8B2E"></span><span style="background:#3F7E44"></span><span style="background:#0A97D9"></span><span style="background:#56C02B"></span><span style="background:#00689D"></span><span style="background:#19486A"></span>
+        </div>
+        <div class="copyright" style="font-size:12px;color:var(--text-dim);letter-spacing:.06em;">&copy; 2026 Mingqing Yin &middot; yinmingqing.com</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ LIVE EMBED OVERLAY ============ -->
+  <div class="embed-overlay" id="embedOverlay" onclick="if(event.target===this)closeEmbed()">
+    <button class="lb-close" onclick="closeEmbed()" aria-label="Close">&times;</button>
+    <iframe id="embedFrame" title="ESCAP Public Debt Dashboard" allowfullscreen></iframe>
+    <div class="lb-caption"><span class="en">ESCAP Public Debt Dashboard, live Power BI</span><span class="zh">ESCAP公共债务看板,Power BI实时数据</span></div>
+  </div>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+    <button class="lb-close" onclick="closeLb()" aria-label="Close">&times;</button>
+    <button class="lb-prev" onclick="stepLb(-1)" aria-label="Previous">&#8592;</button>
+    <img id="lbImg" src="" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+    <div class="lb-count" id="lbCount"></div>
+    <button class="lb-next" onclick="stepLb(1)" aria-label="Next">&#8594;</button>
+  </div>
+
+<script>
+  // ===== language toggle, in-memory only =====
+  function setLang(lang) {
+    document.getElementById('app').setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    renderLbText();
+  }
+  function curLang() { return document.getElementById('app').getAttribute('data-lang'); }
+
+  // ===== horizontal track arrows =====
+  function scrollTrack(id, dir) {
+    const track = document.getElementById(id);
+    const card = track.querySelector('article');
+    const step = (card ? card.getBoundingClientRect().width : 340) + 22;
+    track.scrollBy({ left: dir * step, behavior: 'smooth' });
+  }
+
+  // ===== reveal on scroll =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { root: document.getElementById('snap'), threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('.tl-card, .gal-card, .acad-card').forEach((el, i) => {
+    el.style.transitionDelay = ((i % 8) * 70) + 'ms';
+  });
+
+  // ===== timeline dots pinned on the axis =====
+  function layoutDots() {
+    const track = document.getElementById('tlTrack');
+    track.querySelectorAll('.tl-dot').forEach(d => d.remove());
+    track.querySelectorAll('.tl-card').forEach(c => {
+      const d = document.createElement('div');
+      d.className = 'tl-dot';
+      d.style.left = (c.offsetLeft + c.offsetWidth / 2) + 'px';
+      track.appendChild(d);
+    });
+  }
+  window.addEventListener('resize', layoutDots);
+  window.addEventListener('load', layoutDots);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(layoutDots); }
+  layoutDots();
+
+  // ===== hero spread, driven by scroll progress =====
+  const snap = document.getElementById('snap');
+  const spreads = [document.getElementById('spread1'), document.getElementById('spread2'), document.getElementById('spread3')];
+  let ticking = false;
+  snap.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateSpread);
+      ticking = true;
+    }
+  }, { passive: true });
+  function updateSpread() {
+    ticking = false;
+    const p = Math.min(1, Math.max(0, snap.scrollTop / window.innerHeight));
+    // fade in fast, fade out before the hero fully leaves
+    const vis = p < 0.55 ? (p / 0.45) : Math.max(0, (0.85 - p) / 0.3);
+    const o = Math.min(1, vis) * 0.95;
+    const conf = [
+      { x: -30, y: -6, r: -12 },
+      { x: 0,   y: -14, r: 0  },
+      { x: 30,  y: -6, r: 12  }
+    ];
+    spreads.forEach((el, i) => {
+      const c = conf[i];
+      el.style.opacity = o;
+      el.style.transform =
+        'translate(-50%, -50%) ' +
+        'translate(' + (c.x * p) + 'vw, ' + (c.y * p) + 'vh) ' +
+        'rotate(' + (c.r * p) + 'deg) ' +
+        'scale(' + (0.9 + 0.25 * p) + ')';
+    });
+  }
+  updateSpread();
+
+  // ===== lightbox =====
+  const LB_SETS = {
+    oxford: {
+      imgs: ['assets/acad_oxford_poster.jpg', 'assets/acad_oxford.jpg'],
+      cap: {
+        en: ['City+ 2025 at Oxford, the 8th International Conference on Interdisciplinary Urban Studies','Outstanding Presentation Award, supported by Elsevier'],
+        zh: ['City+ 2025牛津,第八届跨学科城市研究国际会议','Outstanding Presentation Award,Elsevier支持']
+      }
+    },
+    gis: {
+      imgs: ['assets/acad_gis_01.jpg','assets/acad_gis_02.jpg','assets/acad_gis_03.jpg','assets/acad_gis_04.jpg','assets/acad_gis_05.jpg'],
+      cap: {
+        en: ['Chinese population in the Barcelona metropolitan area','Chinese population of Barcelona, census-section detail','Chinese population share by census section','LISA cluster analysis, spatial correlation of population agglomeration','Gender ratio of the Chinese population'],
+        zh: ['巴塞罗那都会区华人人口分布','巴塞罗那华人人口,普查区精细分布','各普查区华人人口占比','LISA聚类分析,人口集聚空间自相关','华人人口性别比例']
+      }
+    },
+    survey: {
+      imgs: ['assets/acad_cover_2023.jpg','assets/acad_cover_2024.jpg','assets/acad_credit_2023.jpg','assets/design_escap24_credit.jpg'],
+      cap: {
+        en: ['Survey 2023, Rethinking Public Debt for the SDGs','Survey 2024, Boosting Affordable and Longer-Term Financing','Survey 2023 acknowledgements, research contribution credit','Survey 2024 acknowledgements, graphic design and layout credit'],
+        zh: ['2023年版,重新思考公共债务与SDG','2024年版,提升政府可负担长期融资','2023版致谢页,研究贡献署名','2024版致谢页,平面设计与排版署名']
+      }
+    },
+    escap23: {
+      imgs: ['assets/design_escap23_01.jpg','assets/design_escap23_02.jpg','assets/design_escap23_03.jpg','assets/design_escap23_04.jpg','assets/design_escap23_05.jpg','assets/acad_credit_2023.jpg'],
+      cap: {
+        en: ['Survey 2023, macroeconomic performance and outlook','Survey 2023, revisiting the public debt and development nexus','Survey 2023, public debt profile of Asia-Pacific economies','Survey 2023, rethinking debt sustainability analysis for the SDGs','Survey 2023, policy options for managing the public debt surge','Acknowledgements page, research contribution credit'],
+        zh: ['2023概览,宏观经济表现与展望','2023概览,重探公共债务与发展的关联','2023概览,亚太经济体公共债务概况','2023概览,面向SDG重构债务可持续性分析','2023概览,应对公共债务激增的政策选项','致谢页,研究贡献署名']
+      }
+    },
+    escap24: {
+      imgs: ['assets/design_escap24_01.jpg','assets/design_escap24_02.jpg','assets/design_escap24_03.jpg','assets/design_escap24_04.jpg','assets/design_escap24_05.jpg','assets/design_escap24_credit.jpg'],
+      cap: {
+        en: ['Survey 2024, financing amid global megatrends','Survey 2024, navigating macroeconomic challenges','Survey 2024, fiscal revenues and domestic savings','Survey 2024, new perspectives for the international community','Survey 2024, demographic shifts, climate and technology','Acknowledgements page, graphic design and layout credit'],
+        zh: ['2024概览,全球巨型趋势下的融资','2024概览,应对宏观经济挑战','2024概览,财政收入与国内储蓄','2024概览,国际社会的新视角','2024概览,人口、气候与技术变迁','致谢页,平面设计与排版署名']
+      }
+    },
+    ccpage: {
+      imgs: ['assets/design_ccpage_01.jpg','assets/design_ccpage_02.jpg','assets/design_ccpage_03.jpg','assets/design_ccpage_04.jpg'],
+      cap: {
+        en: ['Three pillars of value','Membership and fees','About the UPU','The Consultative Committee since 1999'],
+        zh: ['三大价值支柱','会员类别与会费','关于万国邮联','咨询委员会的演进']
+      }
+    },
+    dashboard: {
+      imgs: ['assets/design_dashboard_01.jpg','assets/design_dashboard_02.jpg'],
+      cap: {
+        en: ['Dashboard launch visual, 100+ indicators','Live Power BI interface'],
+        zh: ['看板发布主视觉,100余项指标','Power BI实时界面']
+      }
+    },
+    unep: {
+      imgs: ['assets/design_unep_01.jpg','assets/design_unep_02.jpg'],
+      cap: {
+        en: ['ETPU impact pathways','PAGE Argentina in numbers, published on LinkedIn'],
+        zh: ['ETPU影响路径图','PAGE阿根廷项目数据全景,发布于LinkedIn']
+      }
+    },
+    unfccc: {
+      imgs: ['assets/dc_unfccc_01.jpg','assets/dc_unfccc_02.jpg','assets/dc_unfccc_03.jpg','assets/dc_unfccc_profile.jpg'],
+      cap: {
+        en: ['Nature carousel, 7 slides on nature keeping the world in balance','Meme format on transitioning away from fossil fuels','Wetlands explainer carousel, 6 slides','@unclimatechange, 992K followers on Instagram'],
+        zh: ['自然主题轮播,7图讲述自然如何维系世界平衡','化石燃料转型主题梗图','湿地科普轮播,6图','@unclimatechange官方账号,Instagram粉丝99.2万']
+      }
+    },
+    unepli: {
+      imgs: ['assets/dc_unep_li_01.jpg','assets/design_unep_02.jpg'],
+      cap: {
+        en: ['UNEP FET LinkedIn channel','PAGE Argentina infographic post'],
+        zh: ['UNEP FET官方LinkedIn主页','PAGE阿根廷信息图帖']
+      }
+    },
+    upuli: {
+      imgs: ['assets/dc_upu_li_01.jpg','assets/dc_upu_li_02.jpg'],
+      cap: {
+        en: ['New Gold Member welcome visual on UPU LinkedIn','CC General Assembly in Berne, official post'],
+        zh: ['新金牌成员欢迎视觉,UPU官方LinkedIn','CC全体大会伯尔尼现场,官方帖']
+      }
+    },
+    nego: {
+      imgs: ['assets/nego_meeting.jpg','assets/nego_ccday.jpg','assets/nego_members.jpg'],
+      cap: {
+        en: ['Panel session at a UPU event','CC Member Day, Berne 2026','CC member organizations on upu.int'],
+        zh: ['UPU活动圆桌现场','CC成员日,伯尔尼2026','upu.int上的CC成员机构']
+      }
+    },
+    webinar: {
+      imgs: ['assets/design_webinar_01.jpg'],
+      cap: {
+        en: ['CC webinar series, EU Customs Reform 2026'],
+        zh: ['CC网络研讨会系列,欧盟海关改革2026']
+      }
+    }
+  };
+  let lbSet = null, lbIdx = 0;
+  function openLb(set, idx) {
+    lbSet = set; lbIdx = idx;
+    document.getElementById('lightbox').classList.add('open');
+    renderLb();
+  }
+  function closeLb() {
+    document.getElementById('lightbox').classList.remove('open');
+    lbSet = null;
+  }
+  function stepLb(dir) {
+    if (!lbSet) return;
+    const n = LB_SETS[lbSet].imgs.length;
+    lbIdx = (lbIdx + dir + n) % n;
+    renderLb();
+  }
+  function renderLb() {
+    if (!lbSet) return;
+    const s = LB_SETS[lbSet];
+    document.getElementById('lbImg').src = s.imgs[lbIdx];
+    renderLbText();
+    document.getElementById('lbCount').textContent = (lbIdx + 1) + ' / ' + s.imgs.length;
+  }
+  function renderLbText() {
+    if (!lbSet) return;
+    const s = LB_SETS[lbSet];
+    document.getElementById('lbCaption').textContent = s.cap[curLang()][lbIdx];
+  }
+  document.addEventListener('keydown', (e) => {
+    if (!lbSet) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') stepLb(-1);
+    if (e.key === 'ArrowRight') stepLb(1);
+  });
+
+  // ===== live dashboard embed, lazy loaded =====
+  const PBI_URL = 'https://app.powerbi.com/view?r=eyJrIjoiMjhkNGQ2NmUtMGE4Ny00N2U1LTkyODItY2ExOWYyN2Q5OWRkIiwidCI6IjBmOWUzNWRiLTU0NGYtNGY2MC1iZGNjLTVlYTQxNmU2ZGM3MCIsImMiOjh9';
+  function openEmbed() {
+    const f = document.getElementById('embedFrame');
+    if (!f.src) f.src = PBI_URL;
+    document.getElementById('embedOverlay').classList.add('open');
+  }
+  function closeEmbed() {
+    document.getElementById('embedOverlay').classList.remove('open');
+  }
+
+  // ===== message form, composes a mailto =====
+  function sendMsg(e) {
+    e.preventDefault();
+    const name = document.getElementById('msgName').value.trim();
+    const body = document.getElementById('msgBody').value.trim();
+    const subject = encodeURIComponent('Message from yinmingqing.com, from ' + name);
+    const text = encodeURIComponent(body + '\n\n— ' + name);
+    window.location.href = 'mailto:yin.mingqing1212@gmail.com?subject=' + subject + '&body=' + text;
+    return false;
+  }
+
+  // ===== count-up stats =====
+  function animateCount(el) {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const dur = 1400;
+    const t0 = performance.now();
+    function frame(t) {
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      let val = target * eased;
+      let txt = target >= 1000 ? Math.round(val).toLocaleString('en-US') : (Number.isInteger(target) ? Math.round(val) : val.toFixed(1));
+      el.textContent = txt + (p === 1 ? suffix : '');
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const countIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.done) {
+        e.target.dataset.done = '1';
+        animateCount(e.target);
+      }
+    });
+  }, { root: document.getElementById('snap'), threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countIo.observe(el));
+</script>
+</body>
+</html>
